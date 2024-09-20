@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const JWD_SECRET = 'Ohmygodwhatishappeneing612'
 var jwt = require('jsonwebtoken');
+var fetchUser = require('../middleware/fetchUser');
+
 
 // Route1: create user using: POST '/api/auth/createUser'. Dosen't require auth
 router.post('/createUser', [
@@ -37,8 +39,10 @@ router.post('/createUser', [
         })
 
         const data = {
-            id: user.id
-        }
+            user: {
+                id: user.id
+            }
+        };
         const authtoken = jwt.sign(data, JWD_SECRET);
 
         res.json({ authtoken })
@@ -71,10 +75,11 @@ router.post('/login', [
             return res.status(404).json({ error: 'Try to login with correct Credentials ' })
 
         }
-
         const data = {
-            id: user.id
-        }
+            user: {
+                id: user.id
+            }
+        };
         const authtoken = jwt.sign(data, JWD_SECRET);
         res.json({ authtoken })
     }
@@ -89,8 +94,9 @@ router.post('/login', [
 router.post('/getUser', fetchUser, async (req, res) => {
 
     try {
-        userId = ""
-        const user = User.findById(userId).select("-password")
+        const userId = req.user.id
+        const user = await User.findById(userId).select("-password")
+        res.send(user)
     }
     catch (error) {
         console.log(error.message)
