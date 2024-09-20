@@ -14,7 +14,7 @@ import NoteState from './Context/Notes/NoteState';
 function App() {
   return (
     <>
-
+      <NoteState>
         <Router>
           <Navbar />
           <Routes>
@@ -23,7 +23,7 @@ function App() {
             <Route exact path="/about" element={<About />} />
           </Routes>
         </Router>
-
+      </NoteState>
     </>
   );
 }
