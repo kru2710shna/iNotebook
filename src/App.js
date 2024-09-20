@@ -5,7 +5,7 @@ import {
   Route
 } from "react-router-dom";
 
-import { Home } from './components/Home';
+import Home from './components/Home'
 import About from './components/About';
 import Navbar from './components/NavBar';
 import NoteState from './Context/Notes/NoteState';
@@ -14,7 +14,7 @@ import NoteState from './Context/Notes/NoteState';
 function App() {
   return (
     <>
-      <NoteState >
+
         <Router>
           <Navbar />
           <Routes>
@@ -23,7 +23,7 @@ function App() {
             <Route exact path="/about" element={<About />} />
           </Routes>
         </Router>
-      </NoteState >
+
     </>
   );
 }
